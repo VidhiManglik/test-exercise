@@ -47,6 +47,23 @@ public class Hotel implements Serializable {
     this.deleted = deleted;
   }
 
+  public Hotel(
+      Long id,
+      String name,
+      Double rating,
+      City city,
+      String address,
+      double latitude,
+      double longitude) {
+    this.id = id;
+    this.name = name;
+    this.rating = rating;
+    this.city = city;
+    this.address = address;
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
+
   public Long getId() {
     return id;
   }
