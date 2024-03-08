@@ -1,5 +1,6 @@
 package com.booking.recruitment.hotel.service.impl;
 
+import com.booking.recruitment.hotel.dto.HotelDTO;
 import com.booking.recruitment.hotel.exception.BadRequestException;
 import com.booking.recruitment.hotel.exception.ElementNotFoundException;
 import com.booking.recruitment.hotel.model.City;
@@ -50,9 +51,10 @@ class DefaultHotelService implements HotelService {
   }
 
   @Override
-  public Hotel getHotelById(Long id) {
+  public HotelDTO getHotelById(Long id) {
     return hotelRepository
             .findByIdAndDeletedFalse(id)
+            .map(this::mapToDTO)
             .orElseThrow(() -> new ElementNotFoundException("Could not find hotel with ID provided"));
   }
 
@@ -66,7 +68,7 @@ class DefaultHotelService implements HotelService {
   }
 
   @Override
-  public List<Hotel> searchHotelsByCityAndSortByDistance(Long cityId, String sortBy) {
+  public List<HotelDTO> searchHotelsByCityAndSortByDistance(Long cityId, String sortBy) {
     City city = cityRepository.findById(cityId)
             .orElseThrow(() -> new ElementNotFoundException("City not found"));
 
@@ -84,7 +86,7 @@ class DefaultHotelService implements HotelService {
     }
 
 
-    return hotelsInCity.stream().limit(3).collect(Collectors.toList());
+    return hotelsInCity.stream().limit(3).map(this::mapToDTO).collect(Collectors.toList());
   }
 
   private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
@@ -96,5 +98,11 @@ class DefaultHotelService implements HotelService {
                     Math.sin(dLon / 2) * Math.sin(dLon / 2);
     double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
+  }
+
+  // Helper method to map Hotel entity to HotelDTO
+  private HotelDTO mapToDTO(Hotel hotel) {
+    return new HotelDTO(hotel.getId(), hotel.getName(), hotel.getRating(), hotel.getCity(),
+            hotel.getAddress(), hotel.getLatitude(), hotel.getLongitude());
   }
 }

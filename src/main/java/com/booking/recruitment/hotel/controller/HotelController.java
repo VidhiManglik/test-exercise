@@ -1,5 +1,6 @@
 package com.booking.recruitment.hotel.controller;
 
+import com.booking.recruitment.hotel.dto.HotelDTO;
 import com.booking.recruitment.hotel.exception.ElementNotFoundException;
 import com.booking.recruitment.hotel.model.Hotel;
 import com.booking.recruitment.hotel.service.HotelService;
@@ -29,7 +30,7 @@ public class HotelController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getHotelById(@PathVariable Long id) {
         try {
-            Hotel hotel = hotelService.getHotelById(id);
+            HotelDTO hotel = hotelService.getHotelById(id);
             return ResponseEntity.ok(hotel);
         } catch (ElementNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -53,7 +54,7 @@ public class HotelController {
     }
 
     @GetMapping("/search/{cityId}")
-    public List<Hotel> searchHotelsByCityAndSortByDistance(
+    public List<HotelDTO> searchHotelsByCityAndSortByDistance(
             @PathVariable Long cityId,
             @RequestParam(required = false) String sortBy
     ) {
