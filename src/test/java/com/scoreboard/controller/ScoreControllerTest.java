@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data.sql")
 @SlowTest
-class ScoreBoardControllerTest {
+class ScoreControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired

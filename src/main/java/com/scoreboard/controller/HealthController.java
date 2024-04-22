@@ -10,9 +10,4 @@ public class HealthController {
   public ResponseEntity<String> health() {
     return ResponseEntity.ok().build();
   }
-
-  @GetMapping("/ready")
-  public ResponseEntity<String> ready() {
-    return ResponseEntity.ok().build();
-  }
 }
