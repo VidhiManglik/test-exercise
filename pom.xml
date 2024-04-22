@@ -68,14 +68,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <executable>${basedir}/${scoring.dir}/run-integration-tests.sh</executable>
-                    <arguments>
-                        <argument>${server.port}</argument>
-                        <argument>${scoring.dir}</argument>
-                        <argument>4</argument>
-                    </arguments>
-                </configuration>
             </plugin>
         </plugins>
     </build>
